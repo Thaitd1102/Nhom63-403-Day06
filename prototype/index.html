@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VinFast AI Advisor – Chatbot Tư Vấn Xe Thông Minh</title>
+    <meta name="description" content="VinFast AI Advisor giúp bạn tìm chiếc xe điện VinFast hoàn hảo. Tư vấn thông minh dựa trên nhu cầu và ngân sách.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- ============================================ -->
+    <!-- SCREEN 1: SPLASH / HOME SCREEN              -->
+    <!-- ============================================ -->
+    <div id="screen-home" class="screen active">
+        <div class="home-bg-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+        </div>
+
+        <div class="home-content">
+            <div class="home-logo-area">
+                <img src="vinfast-logo.png" alt="VinFast Logo" class="home-logo" id="home-logo">
+                <h1 class="home-title">VinFast <span class="highlight">AI Advisor</span></h1>
+                <p class="home-subtitle">Tư vấn xe điện thông minh</p>
+            </div>
+
+            <div class="home-features">
+                <div class="feature-card" style="--delay: 0.1s">
+                    <div class="feature-icon">🔋</div>
+                    <div class="feature-text">
+                        <strong>Xe điện VinFast</strong>
+                        <span>VF3, VF6, VF7, VF8, VF9</span>
+                    </div>
+                </div>
+                <div class="feature-card" style="--delay: 0.2s">
+                    <div class="feature-icon">💰</div>
+                    <div class="feature-text">
+                        <strong>Tư vấn theo ngân sách</strong>
+                        <span>Tìm xe phù hợp với bạn</span>
+                    </div>
+                </div>
+                <div class="feature-card" style="--delay: 0.3s">
+                    <div class="feature-icon">📊</div>
+                    <div class="feature-text">
+                        <strong>So sánh chi tiết</strong>
+                        <span>Giá, pin, tính năng</span>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn-start" id="btn-start" onclick="goToChat()">
+                <span class="btn-icon">💬</span>
+                <span>Bắt đầu tư vấn</span>
+                <svg class="btn-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <path d="M4 10H16M16 10L11 5M16 10L11 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Floating chatbot button (bottom-right) -->
+        <button class="fab-chat" id="fab-chat" onclick="goToChat()" title="Mở chatbot">
+            <div class="fab-icon">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+                    <path d="M21 11.5C21.0034 12.8199 20.6951 14.1219 20.1 15.3C19.3944 16.7118 18.3098 17.8992 16.9674 18.7293C15.6251 19.5594 14.0782 19.9994 12.5 20C11.1801 20.0035 9.87812 19.6951 8.7 19.1L3 21L4.9 15.3C4.30493 14.1219 3.99656 12.8199 4 11.5C4.00061 9.92179 4.44061 8.37488 5.27072 7.03258C6.10083 5.69028 7.28825 4.6056 8.7 3.90003C9.87812 3.30496 11.1801 2.99659 12.5 3.00003H13C15.0843 3.11502 17.053 3.99479 18.5291 5.47089C20.0052 6.94699 20.885 8.91568 21 11V11.5Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+            <div class="fab-pulse"></div>
+        </button>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- SCREEN 2: CHAT INTERFACE                    -->
+    <!-- ============================================ -->
+    <div id="screen-chat" class="screen">
+
+        <!-- Chat Header -->
+        <header class="chat-header" id="chat-header">
+            <button class="btn-back" onclick="goHome()" title="Về trang chủ">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path d="M19 12H5M5 12L12 19M5 12L12 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+            <div class="header-info">
+                <div class="header-avatar">
+                    <span>🚗</span>
+                    <div class="online-dot"></div>
+                </div>
+                <div class="header-text">
+                    <h2>VinFast AI Advisor</h2>
+                    <span class="status-text" id="status-text">Luôn sẵn sàng</span>
+                </div>
+            </div>
+            <button class="btn-menu" onclick="toggleMenu()" title="Menu">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <circle cx="12" cy="5" r="1.5" fill="currentColor"/>
+                    <circle cx="12" cy="12" r="1.5" fill="currentColor"/>
+                    <circle cx="12" cy="19" r="1.5" fill="currentColor"/>
+                </svg>
+            </button>
+        </header>
+
+        <!-- Chat Messages Area -->
+        <main class="chat-messages" id="chat-messages">
+            <!-- Welcome message -->
+            <div class="date-divider">
+                <span>Hôm nay</span>
+            </div>
+        </main>
+
+        <!-- Quick Suggestions -->
+        <div class="quick-suggestions" id="quick-suggestions">
+            <button class="suggestion-chip" onclick="sendSuggestion('Tư vấn VF3')">🚗 Tư vấn VF3</button>
+            <button class="suggestion-chip" onclick="sendSuggestion('So sánh VF7 và VF8')">📊 So sánh VF7 vs VF8</button>
+            <button class="suggestion-chip" onclick="sendSuggestion('Xe nào dưới 800 triệu?')">💰 Dưới 800 triệu</button>
+            <button class="suggestion-chip" onclick="sendSuggestion('Tính chi phí VF8 5 năm')">🧮 Tính TCO</button>
+        </div>
+
+        <!-- Chat Input -->
+        <footer class="chat-input-area" id="chat-input-area">
+            <div class="input-wrapper">
+                <input
+                    type="text"
+                    id="chat-input"
+                    class="chat-input"
+                    placeholder="Nhập câu hỏi về xe VinFast..."
+                    autocomplete="off"
+                    onkeydown="if(event.key==='Enter')sendMessage()"
+                >
+                <button class="btn-send" id="btn-send" onclick="sendMessage()" title="Gửi">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                        <path d="M22 2L11 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M22 2L15 22L11 13L2 9L22 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </div>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
